@@ -6,6 +6,22 @@ findN_score <- function(R0, p1_t, p2_t,alpha,power_score,k) {
   N
 }
 
+findN_scorefrN1 <- function(R0, p1_t, p2_t,alpha,power_score,N1) {
+  checkN <- seq(from=N1,to=10000,by=0.1)
+  y <- round(findPower_score(rep(R0,times=length(checkN)),rep(p1_t,times=length(checkN)),rep(p2_t,times=length(checkN)),rep(alpha,times=length(checkN)),checkN,N1/checkN),5)
+  n <- match(power_score,y)
+  N <- checkN[n]
+  N
+}
+
+findN_scorefrN2 <- function(R0, p1_t, p2_t,alpha,power_score,N2) {
+  checkN <- seq(from=N2,to=10000,by=0.1)
+  y <- round(findPower_score(rep(R0,times=length(checkN)),rep(p1_t,times=length(checkN)),rep(p2_t,times=length(checkN)),rep(alpha,times=length(checkN)),checkN,(checkN-N2)/checkN),5)
+  n <- match(power_score,y)
+  N <- checkN[n]
+  N
+}
+
 findN_scorep1p2 <- function(R0, p1_t, p2_t,alpha,power_score,k) {
   checkN <- seq(from=1,to=10000,by=0.1)
 	R0 <- as.vector(R0)
@@ -609,7 +625,7 @@ DrawPowerVEp2 <- function(VE, p2_t,R0,alpha,N,k) {
   
   for(i in Iterations) {
     R <- 1 - VE
-    p1_t <- p2_t[i]/R
+    p1_t <- p2_t[i]*R
     N1 <- k*N
     N2 <- N - N1
     x1 <- p1_t*N1
@@ -861,7 +877,7 @@ DrawNRp2 <- function(R, p2_t,R0,alpha,power_score,k) {
 }
 
 DrawNp1p2 <- function(p1_t, p2_t,R0,alpha,power_score,k) {
-  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.01)
+  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.00001)
   
   Iterations <- 1:length(p2_t)
   LTY <- Iterations
@@ -891,9 +907,9 @@ DrawNVEp2 <- function(VE, p2_t,R0,alpha,power_score,k) {
   
   for(i in Iterations) {
     R <- 1 - VE
-    p1_t <- p2_t[i]/R
-    N <- rep(NA,times=length(VE))
-    for(j in 1:length(VE)) {
+    p1_t <- p2_t[i]*R
+    N <- rep(NA,times=length(R))
+    for(j in 1:length(R)) {
       N[j] <- findN_score(R0,p1_t[j],p2_t[i],alpha,power_score,k)
     }
     if(i==1) {
@@ -931,7 +947,7 @@ DrawNRp1 <- function(R, p1_t,R0,alpha,power_score,k) {
 }
 
 DrawNp2p1 <- function(p2_t, p1_t,R0,alpha,power_score,k) {
-  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.01)
+  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.00001)
   
   Iterations <- 1:length(p1_t)
   LTY <- Iterations
@@ -978,7 +994,7 @@ DrawNVEp1 <- function(VE, p1_t,R0,alpha,power_score,k) {
 }
 
 DrawNp2R <- function(p2_t,R,R0,alpha,power_score,k) {
-  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.01)
+  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.00001)
   
   Iterations <- 1:length(R)
   LTY <- Iterations
@@ -1001,7 +1017,7 @@ DrawNp2R <- function(p2_t,R,R0,alpha,power_score,k) {
 }
 
 DrawNp1R <- function(p1_t,R,R0,alpha,power_score,k) {
-  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.01)
+  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.00001)
   
   Iterations <- 1:length(R)
   LTY <- Iterations
@@ -1024,7 +1040,7 @@ DrawNp1R <- function(p1_t,R,R0,alpha,power_score,k) {
 }
 
 DrawNp1VE <- function(p1_t,VE,R0,alpha,power_score,k) {
-  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.01)
+  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.00001)
   
   Iterations <- 1:length(VE)
   LTY <- Iterations
@@ -1048,7 +1064,7 @@ DrawNp1VE <- function(p1_t,VE,R0,alpha,power_score,k) {
 }
 
 DrawNp2VE <- function(p2_t,VE,R0,alpha,power_score,k) {
-  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.01)
+  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.00001)
   
   Iterations <- 1:length(VE)
   LTY <- Iterations
@@ -1066,6 +1082,250 @@ DrawNp2VE <- function(p2_t,VE,R0,alpha,power_score,k) {
     }
     else {
       lines(y=N, x=p2_t,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=VE,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="Vaccine Efficacy")
+  }
+}
+
+DrawN2Rp2 <- function(R, p2_t,R0,alpha,power_score,N1) {
+  R <- seq(from=min(R),to=max(R),by=0.01)
+  
+  Iterations <- 1:length(p2_t)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    p1_t <- p2_t[i]*R
+    N <- rep(NA,times=length(p1_t))
+    for(j in 1:length(p1_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[j],p2_t[i],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~R,type="l",main=c("Sample Size in 2-dose arm vs. R",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="R = p1/p2",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=R,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=p2_t,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="p2")
+  }
+}
+
+DrawN2p1p2 <- function(p1_t, p2_t,R0,alpha,power_score,N1) {
+  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.00001)
+  
+  Iterations <- 1:length(p2_t)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    R <- p1_t/p2_t[i]
+    N <- rep(NA,times=length(p1_t))
+    for(j in 1:length(p1_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[j],p2_t[i],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~p1_t,type="l",main=c("Sample Size in 2-dose arm", "vs. Attack Rate in 1-dose arm",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Attack Rate in 1-dose arm",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=p1_t,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=p2_t,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="p2")
+  }
+}
+
+DrawN2VEp2 <- function(VE, p2_t,R0,alpha,power_score,N1) {
+  VE <- seq(from=min(VE),to=max(VE),by=0.01)
+  
+  Iterations <- 1:length(p2_t)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    R <- 1 - VE
+    p1_t <- p2_t[i]*R
+    N <- rep(NA,times=length(R))
+    for(j in 1:length(R)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[j],p2_t[i],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~VE,type="l",main=c("Sample Size in 2-dose arm vs. Vaccine Efficacy",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Vaccine Efficacy",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=VE,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=p2_t,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="p2")
+  }
+}
+
+DrawN2Rp1 <- function(R, p1_t,R0,alpha,power_score,N1) {
+  R <- seq(from=min(R),to=max(R),by=0.01)
+  
+  Iterations <- 1:length(p1_t)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    p2_t <- p1_t[i]/R
+    N <- rep(NA,times=length(p2_t))
+    for(j in 1:length(p2_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[i],p2_t[j],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~R,type="l",main=c("Sample Size in 2-dose arm vs. R",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="R = p1/p2",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=R,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=p1_t,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="p1")
+  }
+}
+
+DrawN2p2p1 <- function(p2_t, p1_t,R0,alpha,power_score,N1) {
+  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.00001)
+  
+  Iterations <- 1:length(p1_t)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    R <- p1_t[i]/p2_t
+    N <- rep(NA,times=length(p2_t))
+    for(j in 1:length(p2_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[i],p2_t[j],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~p2_t,type="l",main=c("Sample Size in 2-dose arm", "vs. Attack Rate in 2-dose arm",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Attack Rate in 2-dose arm",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=p2_t,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=p1_t,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="p1")
+  }
+}
+
+DrawN2VEp1 <- function(VE, p1_t,R0,alpha,power_score,N1) {
+  VE <- seq(from=min(VE),to=max(VE),by=0.01)
+  
+  Iterations <- 1:length(p1_t)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    R <- 1 - VE
+    p2_t <- p1_t[i]/R
+    N <- rep(NA,times=length(p2_t))
+    for(j in 1:length(p2_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[i],p2_t[j],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~VE,type="l",main=c("Sample Size in 2-dose arm vs. Vaccine Efficacy",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Vaccine Efficacy",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=VE,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=p1_t,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="p1")
+  }
+}
+
+DrawN2p2R <- function(p2_t,R,R0,alpha,power_score,N1) {
+  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.00001)
+  
+  Iterations <- 1:length(R)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    p1_t <- p2_t*R[i]
+    N <- rep(NA,times=length(p2_t))
+    for(j in 1:length(p2_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[j],p2_t[j],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~p2_t,type="l",main=c("Sample Size in 2-dose arm", "vs. Attack Rate in 2-dose arm",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Attack Rate in 2-dose arm",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=p2_t,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=R,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="R = p1/p2")
+  }
+}
+
+DrawN2p1R <- function(p1_t,R,R0,alpha,power_score,N1) {
+  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.00001)
+  
+  Iterations <- 1:length(R)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    p2_t <- p1_t/R[i]
+    N <- rep(NA,times=length(p2_t))
+    for(j in 1:length(p2_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[j],p2_t[j],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~p1_t,type="l",main=c("Sample Size in 2-dose arm", "vs. Attack Rate in 1-dose arm",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Attack Rate in 1-dose arm",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=p1_t,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=R,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="R = p1/p2")
+  }
+}
+
+DrawN2p1VE <- function(p1_t,VE,R0,alpha,power_score,N1) {
+  p1_t <- seq(from=min(p1_t),to=max(p1_t),by=0.00001)
+  
+  Iterations <- 1:length(VE)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    R <- 1 - VE[i]
+    p2_t <- p1_t/R[i]
+    N <- rep(NA,times=length(p2_t))
+    for(j in 1:length(p2_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[j],p2_t[j],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~p1_t,type="l",main=c("Sample Size in 2-dose arm", "vs. Attack Rate in 1-dose arm",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Attack Rate in 1-dose arm",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=p1_t,lty=LTY[i], col = LTY[i],lwd=3)
+    }
+    legend(lty=LTY,legend=VE,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="Vaccine Efficacy")
+  }
+}
+
+DrawN2p2VE <- function(p2_t,VE,R0,alpha,power_score,N1) {
+  p2_t <- seq(from=min(p2_t),to=max(p2_t),by=0.0001)
+  
+  Iterations <- 1:length(VE)
+  LTY <- Iterations
+  
+  for(i in Iterations) {
+    R <- 1 - VE[i]
+    p1_t <- p2_t*R[i]
+    N <- rep(NA,times=length(p2_t))
+    for(j in 1:length(p2_t)) {
+      N[j] <- findN_scorefrN1(R0,p1_t[j],p2_t[j],alpha,power_score,N1)
+    }
+    N2 <- N - N1
+    if(i==1) {
+      par(mar=c(5.1, 4.1, 5.1, 9.5))
+      plot(N2~p2_t,type="l",main=c("Sample Size in 2-dose arm", "vs. Attack Rate in 2-dose arm",paste("R0 =",R0,", alpha =",alpha),paste("Power =",power_score,", Sample Size in 1-dose arm =",N1)),xlab="Attack Rate in 2-dose arm",ylab="Sample Size in 2-dose arm", lwd=3,lty=LTY[i], col = LTY[i],font.lab=2,font=2,cex.axis=1.15,cex.lab=1.15)
+    }
+    else {
+      lines(y=N2, x=p2_t,lty=LTY[i], col = LTY[i],lwd=3)
     }
     legend(lty=LTY,legend=VE,"bottomright",cex=1.15, lwd=3,col= LTY,text.font=2,bty="o",inset=c(-0.5,0),xpd = TRUE,title="Vaccine Efficacy")
   }
