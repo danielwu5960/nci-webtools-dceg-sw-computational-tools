@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="dceg.css" />
         <link rel="stylesheet" href="vaccineEfficacy.css" />
+        <link rel="stylesheet" href="sampleSize.css" />
+        <link rel="stylesheet" href="riskStratAdvanced.css" />
     </head>
 
     <body>
@@ -27,7 +29,7 @@
             <!--Main in Main -->
             <div id="wrapper">
                 <ul class="nav nav-tabs" id="myTab">
-                    <li>
+                    <li class="active">
                         <a href="#homeTab">Home</a>
                     </li>
                     <li class="dropdown">
@@ -44,7 +46,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="active"> 
+                    <li> 
                         <a href="#vaccineEfficacyTab">VaccineEfficacy</a>
                     </li>
                     <li>
@@ -53,7 +55,7 @@
                 </ul>
                 <div class="tab-content">
                     <!-- HOME Tab -->
-                    <div id="homeTab" class="tab-pane fade">
+                    <div id="homeTab" class="tab-pane fade in active">
                         The Division of Cancer Epidemiology and Genetics (DCEG) is a research program of the National Cancer Institute (NCI), one of the National Institutes of Health (NIH). The Division is the world’s most comprehensive cancer epidemiology research group. Its renowned epidemiologists, geneticists, and biostatisticians conduct population and multidisciplinary research to discover the genetic and environmental determinants of cancer and new approaches to cancer prevention. The Division’s research impacts public health policy in the United States and around the world.
                         <br>
                         <br>
@@ -69,7 +71,7 @@
                     <div id='sampleSize'>
                         <br>
                         <h2 class="title" align="center">Power and Sample Size for Biomarker Case Control Studies</h2>
-                        <div id="helpGlossaryLinks-ss">
+                        <div id="helpGlossaryLinks_ss">
                             <a href="#" onclick="openHelpWindow('common/html/meansToRiskGlossary.html')">Glossary</a>
                         </div>
                         <br>
@@ -77,49 +79,49 @@
                             <div style='clear: left; padding-top: 10px;'>
                                 <table class="tablevars">
                                     <tr>
-                                        <td align="right">
-                                            <label for="independent_dropdown-ss">Independent Variable</label>
+                                        <td>
+                                            <label for="independent_dropdown_ss">Independent Variable</label>
                                         </td>
                                         <td>
-                                            <select id="independent_dropdown-ss" name="independent_dropdown-ss" width="100%">
+                                            <select id="independent_dropdown_ss" name="independent_dropdown_ss" width="100%">
                                                 <option value="k" selected>k</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <label for="independent-ss">
+                                            <label for="independent_ss">
                                                 <input type="text"
-                    size="30" id="independent-ss" pattern="([0-9],[0-9])"
+                    size="30" id="independent_ss" pattern="([0-9],[0-9])"
                     title="A comma separated pair that refers to the minimum and maximum respectively"
                     title="A comma separated pair that refers to the minimum and maximum respectively"
                     value="0,1" class="fontnormal"></label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right">
-                                            <label for="contour_dropdown-ss">Contour</label>
+                                        <td>
+                                            <label for="contour_dropdown_ss">Contour</label>
                                         </td>
                                         <td>
-                                            <select id="contour_dropdown-ss" name="contour_dropdown-ss" onchange="lock_fixed_options();">
+                                            <select id="contour_dropdown_ss" name="contour_dropdown_ss" onchange="lock_fixed_options();">
                                                 <option value="" selected></option>
                                                 <option value="specificity">Specificity</option>
                                                 <option value="sensitivity">Sensitivity</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <label for="contour-ss">
+                                            <label for="contour_ss">
                                                 <input type="text" size="30"
-                    id="contour-ss" pattern="([0-9,. \-])+"
+                    id="contour_ss" pattern="([0-9,. \-])+"
                     title="An array of floating point numbers separated by commas.  Numbers must be between 0 and 1"
                     title="An array of floating point numbers separated by commas  Numbers must be between 0 and 1"
                      class="fontnormal"></label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right">
-                                            <label for="fixed_dropdown-ss">Fixed Values</label>
+                                        <td>
+                                            <label for="fixed_dropdown_ss">Fixed Values</label>
                                         </td>
                                         <td>
-                                            <select id="fixed_dropdown-ss" name="fixed_dropdown-ss">
+                                            <select id="fixed_dropdown_ss" name="fixed_dropdown_ss">
                                                 <option value="" selected></option>
                                                 <option value="specificity" disabled="disabled">Specificity</option>
                                                 <option value="sensitivity" disabled="disabled">Sensitivity</option>
@@ -127,32 +129,31 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <label for="fixed-ss">
+                                            <label for="fixed_ss">
                                                 <input type="text" size="30"
-                    id="fixed-ss" pattern="([0-9,. \-])+"
+                    id="fixed_ss" pattern="([0-9,. \-])+"
                     title="An array of floating point numbers separated by commas. Numbers must be between 0 and 1"
                      class="fontnormal"></label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right">
+                                        <td>
                                             <label for="prevalence">Prevalence</label>
                                         </td>
                                         <td>
                                             <label for="prevalence">
-                                                <input type="text" size="10"
-                    id="prevalence" value="0.001"
+                                                <input type="text" id="prevalence" value="0.001"
                     title="A floating point number between 0 and 1"
                      class="fontnormal"  required></label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right">
+                                        <td>
                                             <label for="n_value">N</label>
                                         </td>
                                         <td>
                                             <label for="n_value">
-                                                <input type="text" size="10"
+                                                <input type="text" 
                     id="n_value" value="1" pattern="(^[0-9]$)+"
                     title="Number must be an integer"
                      class="fontnormal" required></label>
@@ -172,7 +173,7 @@
                                         </td>
                                         <td class="spacer">&nbsp;</td>
                                         <td class="example">
-                                            <a id="add-test-data-ss" title="Populate variables with working example" href="#">Example</a>
+                                            <a id="add-test-data_ss" title="Populate variables with working example" href="#">Example</a>
                                         </td>
                                     </tr>
 
@@ -203,24 +204,24 @@
 
                 <!-- riskStratAdvanced Tab -->
                 <div id="riskStratAdvancedTab" class="tab-pane fade">                    
-                    <div id='riskStratAdvanced'>
-                        <form>
+                    <div id='riskStratAdvanced'>                        
                             <br>
                             <h2 align="center" class="title">
                                 Risk Stratification Advanced Analysis Options
                             </h2>
-                            <div id="helpGlossaryLinks-rsa">
+                            <div id="helpGlossaryLinks_rsa">                                
                                 <a href="#" onclick="openHelpWindow('riskStratAdvanced_help.html')">Help</a>
                                 <a href="#" onclick="openHelpWindow('common/html/meansToRiskGlossary.html')">Glossary</a>
                             </div>
                             <br>
+                            <form>
                             <table>
                                 <tr>
-                                    <td class='label'>
-                                        <label for="independent_dropdown-rsa">Independent Variable</label>
+                                    <td>
+                                        <label for="independent_dropdown_rsa">Independent Variable</label>
                                     </td>
                                     <td>
-                                        <select id="independent_dropdown-rsa" class="rsa" name="independent_dropdown-rsa">
+                                        <select id="independent_dropdown_rsa" class="rsa" name="independent_dropdown_rsa">
                                             <option value="" selected></option>
                                             <option value="specificity">Specificity</option>
                                             <option value="prevalence">Prevalence</option>
@@ -231,9 +232,9 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <label for="independent-rsa">
+                                        <label for="independent_rsa">
                                             <input type="text" class="rsa" 
-                            size="30" id="independent-rsa" pattern="([0-9,. \-])+"
+                            size="30" id="independent_rsa" pattern="([0-9,. \-])+"
                             title="An array of floating point numbers seperated by commas."
                             title="An array of floating point numbers seperated by commas"
                             required></label>
@@ -246,11 +247,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class='label'>
-                                        <label for="contour_dropdown-rsa">Contour</label>
+                                    <td>
+                                        <label for="contour_dropdown_rsa">Contour</label>
                                     </td>
                                     <td>
-                                        <select id="contour_dropdown-rsa" class="rsa" name="contour_dropdown-rsa">
+                                        <select id="contour_dropdown_rsa" class="rsa" name="contour_dropdown_rsa">
                                             <option value="" selected></option>
                                             <option value="ppv">PPV</option>
                                             <option value="prevalence">Prevalence</option>
@@ -261,9 +262,9 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <label for="contour-rsa">
+                                        <label for="contour_rsa">
                                             <input type="text" size="30" class="rsa" 
-                            id="contour-rsa" pattern="([0-9,. \-])+"
+                            id="contour_rsa" pattern="([0-9,. \-])+"
                             title="An array of floating point numbers seperated by commas."
                             title="An array of floating point numbers seperated by commas"
                             required></label>
@@ -276,11 +277,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class='label'>
-                                        <label for="fixed_dropdown-rsa">Fixed Values</label>
+                                    <td>
+                                        <label for="fixed_dropdown_rsa">Fixed Values</label>
                                     </td>
                                     <td>
-                                        <select id="fixed_dropdown-rsa" class="rsa" name="fixed_dropdown-rsa">
+                                        <select id="fixed_dropdown_rsa" class="rsa" name="fixed_dropdown_rsa">
                                             <option value="" selected></option>
                                             <option value="prevalence">Prevalence</option>
                                             <option value="delta">Delta</option>
@@ -291,9 +292,9 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <label for="fixed-rsa">
+                                        <label for="fixed_rsa">
                                             <input type="text" size="30" class="rsa" 
-                            id="fixed-rsa" pattern="([0-9,. \-])+"
+                            id="fixed_rsa" pattern="([0-9,. \-])+"
                             title="An array of floating point numbers seperated by commas"
                             required></label>
                                     </td>
@@ -304,14 +305,19 @@
                                         <span class="variable-example"></span>
                                     </td>
                                 </tr>
+                                <tr>                                    
+                                    <td colspan="2">
+                                        <button id="calculate_rsa" type="submit" disabled>Calculate</button>
+                                        <button id="reset_rsa" type="reset" >Reset</button>
+                                    </td>
+                                    <td align="right">
+                                        <a id="add-test-data_rsa" class="example" href="#" title="Populate variables with a working example">Example</a>
+                                    </td>   
+                                    <td colspan="2"></td>                            
+                                </tr>
                             </table>
                             <br />
-                            <div style="width: 450px;">
-                                <button id="calculate" disabled>Calculate</button>
-                                <button type="reset" id="reset">Reset</button>
-                                <a id="add-test-data-rsa" class="example" href="#" title="Populate variables with a working example">Example</a>
-                            </div>
-                            <div id="status-bar">Status Bar</div>
+                            <div id="status-bar_rsa">Status Bar</div>
                         </form>
                         <br />
                         <div id="dialog-confirm" title="Rules Violation">
@@ -344,7 +350,7 @@
                     <!-- riskStratAdvanced $ -->
 
                     <!-- VaccineEfficacy Tab -->
-                    <div id="vaccineEfficacyTab" class="tab-pane fade in active">
+                    <div id="vaccineEfficacyTab" class="tab-pane fade">
                         <!-- VaccineEfficacy ^ -->
                         <div id='vaccineEfficacy'>
                             <form>
@@ -487,7 +493,7 @@
 
                     <!-- FAQ Tab -->
                     <div id="faqTab" class="tab-pane fade">
-                        <h3>FAQ</h3>
+                        <h2>FAQ</h2>                  
                         <h4>What can I do to improve the results of this project?</h4>
                         If you have job descriptions that have been coded by an expert coder and you are willing to provide them to us, we will be happy to retrain our models. If the data are protected, a data use agreement may be possible. Your institute may provide guidance on data use agreements.
                         <br>
@@ -497,7 +503,7 @@
                         <br>
                         <br>
                         <h4>What are this project scores?</h4>
-                        Our classifier uses logistic regression to calculate that log-odds that an expert reviewer would have selected a SOC 2010 code. The SOCcer score is the transformed log-odds (to a probability). In general the higher the SOCcer score, the greater the probability of matching an expert review. Please see our paper for more details in the relationship between SOCcer score and probability of matching. Some dataset are more difficult to classify than others. The SOCcer score distribution provides an overview of how well SOCcer performed on your data set.
+                        Our classifier uses logistic regression to calculate that log-odds that an expert reviewer would have selected a SOC 2010 code. The SOCcer score is the transformed log-odds (to a probability). In general the higher the SOCcer score, the greater the probability of matching an expert review. Please see our paper for more details in the relationship between SOCcer score and probability of matching. Some dataset are more difficult to classify than others. The SOCcer score distribution provides an overview of how well SOCcer performed on your data set.                    
                     </div>
                 </div>
             </div>

@@ -168,7 +168,7 @@ $(document).ready(function() {
 			return this.replace(/^\s+|\s+$/g, '');
 		};
 	}
-	$("#reset").button().click(function() {
+	$("#reset_rsa").button().click(function() {
 		resetPage();
 	});
 
@@ -199,7 +199,7 @@ $(document).ready(function() {
 			}
 		}, 1);
 	});
-	$("#calculate").button().click(function(e) {
+	$("#calculate_rsa").button().click(function(e) {
 		e.preventDefault();
 		if (checkRules() == "Fail") {
 			$("#dialog-confirm").dialog("open");
@@ -208,7 +208,7 @@ $(document).ready(function() {
 			calculate();
 		}
 	});
-	$("#add-test-data-rsa").click(function(e) {
+	$("#add-test-data_rsa").click(function(e) {
 		e.preventDefault();
 		addTestData();
 	});
@@ -218,15 +218,15 @@ $(document).ready(function() {
 
 function addTestData() {
 	// select dropdown
-	$("#independent_dropdown-rsa").val("specificity");
-	$("#contour_dropdown-rsa").val("prevalence");
-	$("#fixed_dropdown-rsa").val("delta");
+	$("#independent_dropdown_rsa").val("specificity");
+	$("#contour_dropdown_rsa").val("prevalence");
+	$("#fixed_dropdown_rsa").val("delta");
 
-	makeSelectionsUnique(functionnames_rsa, "independent_dropdown-rsa");
-	$("#independent-rsa").val("0.6, 0.75, 0.8, 0.86, 0.92");
-	$("#contour-rsa").val("0.01, 0.05, 0.1");
-	$("#fixed-rsa").val("1, 1.5, 2, 3");
-	$("#calculate").button("option", "disabled", false);
+	makeSelectionsUnique(functionnames_rsa, "independent_dropdown_rsa");
+	$("#independent_rsa").val("0.6, 0.75, 0.8, 0.86, 0.92");
+	$("#contour_rsa").val("0.01, 0.05, 0.1");
+	$("#fixed_rsa").val("1, 1.5, 2, 3");
+	$("#calculate_rsa").button("option", "disabled", false);
 	$(".variable-example").text("");
 	addPopupDefinition();
 }
@@ -241,9 +241,9 @@ var termLookup = {
 }
 
 function addPopupDefinition() {
-	var independent_rsa = $('#independent_dropdown-rsa').val();
-	var contour_rsa = $('#contour_dropdown-rsa').val();
-	var fixedValue = $('#fixed_dropdown-rsa').val();	
+	var independent_rsa = $('#independent_dropdown_rsa').val();
+	var contour_rsa = $('#contour_dropdown_rsa').val();
+	var fixedValue = $('#fixed_dropdown_rsa').val();	
 	if (!!independent_rsa) {
 		var independentTerm = termLookup[independent_rsa];
 		createPopupDefinitionElement("indDef", independentTerm, independentTerm);
@@ -287,12 +287,12 @@ function resetPopupDefinition() {
 }
 
 function resetPage() {
-	makeSelectionsUnique(functionnames_rsa, "independent_dropdown-rsa");
+	makeSelectionsUnique(functionnames_rsa, "independent_dropdown_rsa");
 	$("span.variable-example").text("");
 	$("option").removeAttr("disabled");
 	$("#status-bar").css("visibility", "hidden");
 	// Reselect User selection
-	// resetOption = $("#fixed_dropdown-rsa").find("").val();
+	// resetOption = $("#fixed_dropdown_rsa").find("").val();
 	// resetOption( "option", "selected", true );
 	$("select.rsa").val("");
 	$("input.rsa").val("");
@@ -485,9 +485,9 @@ function checkInputFields() {
 		selectedValues.push($('#' + elementId).val().length);
 	});
 	if ($.inArray(0, selectedValues) == -1 && validCombo) {
-		$("#calculate").button("option", "disabled", false);
+		$("#calculate_rsa").button("option", "disabled", false);
 	} else {
-		$("#calculate").button("option", "disabled", true);
+		$("#calculate_rsa").button("option", "disabled", true);
 	}
 	;
 
@@ -497,12 +497,12 @@ function calculate() {
 	// Check pattern for each input box
 
 	var checkInput = [];
-	// console.log(document.getElementById("independent-rsa").checkValidity());
-	// console.log(document.getElementById("contour-rsa").checkValidity());
-	// console.log(document.getElementById("fixed-rsa").checkValidity());
-	checkInput.push(document.getElementById("independent-rsa").checkValidity());
-	checkInput.push(document.getElementById("contour-rsa").checkValidity());
-	checkInput.push(document.getElementById("fixed-rsa").checkValidity());
+	// console.log(document.getElementById("independent_rsa").checkValidity());
+	// console.log(document.getElementById("contour_rsa").checkValidity());
+	// console.log(document.getElementById("fixed_rsa").checkValidity());
+	checkInput.push(document.getElementById("independent_rsa").checkValidity());
+	checkInput.push(document.getElementById("contour_rsa").checkValidity());
+	checkInput.push(document.getElementById("fixed_rsa").checkValidity());
 	if ($.inArray(false, checkInput) >= 0) {
 		$("#status-bar").css("visibility", "visible");
 		$("#status-bar")
@@ -527,23 +527,23 @@ function calculate() {
 	var independentArray = $("#independent").val();
 	// Remove all spaces and non-characters
 	independentArray = independentArray.replace(/[^\d,.-]/g, '');
-	var independentval = $("#independent_dropdown-rsa").val();
+	var independentval = $("#independent_dropdown_rsa").val();
 	independentArraySplit = independentArray.split(",");
 	var independentMin = Math.min.apply(Math, independentArraySplit)
 	var independentMax = Math.max.apply(Math, independentArraySplit)
-	var contourArray = $("#contour-rsa").val();
+	var contourArray = $("#contour_rsa").val();
 	// Remove all spaces and non-characters
 	contourArray = contourArray.replace(/[^\d,.-]/g, '');
-	var contourval = $("#contour_dropdown-rsa").val();
+	var contourval = $("#contour_dropdown_rsa").val();
 	var columnHeadings = contourArray.split(",");
-	var fixedArray = $("#fixed-rsa").val();
+	var fixedArray = $("#fixed_rsa").val();
 	// Remove all spaces and non-characters
 	fixedArray = fixedArray.replace(/[^\d,.-]/g, '');
-	var fixedval = $("#fixed_dropdown-rsa").val();
+	var fixedval = $("#fixed_dropdown_rsa").val();
 	var fixedArraySplit = fixedArray.split(",");
 	var fixedArraySize = fixedArraySplit.length;
 
-	var fixed_dropdown_rsa = $("#fixed_dropdown-rsa").val();
+	var fixed_dropdown_rsa = $("#fixed_dropdown_rsa").val();
 
 	uniqueKey = (new Date()).getTime();
 
@@ -564,10 +564,10 @@ function calculate() {
 		for ( var key in keyvalueShort) {
 			numberOfKeysForCurrentFunction++;
 		}
-		var eIndependent = document.getElementById("independent_dropdown-rsa");
+		var eIndependent = document.getElementById("independent_dropdown_rsa");
 		var selectedIndependentValue = eIndependent.options[eIndependent.selectedIndex].text;
 
-		var eContour = document.getElementById("contour_dropdown-rsa");
+		var eContour = document.getElementById("contour_dropdown_rsa");
 		var selectedContourValue = eContour.options[eContour.selectedIndex].text;
 
 		// tableFirstColLabel = selectedIndependentValue + "\\" +
@@ -588,10 +588,10 @@ function calculate() {
 		var spacing = "<p></p><p></p><p></p>";
 
 		for (var i = 0; i < fixedArraySplit.length; i++) {
-			tab_names.append("<LI><a  style='padding:3px;' href='#fixed-rsa-"
+			tab_names.append("<LI><a  style='padding:3px;' href='#fixed_rsa-"
 					+ (i + 1) + "'>" + fixed_dropdown_rsa + "<br>&nbsp&nbsp&nbsp "
 					+ fixedArraySplit[i] + "</a></LI>");
-			tab_pane = $("<div class='tab-pane' id='fixed-rsa-" + (i + 1)
+			tab_pane = $("<div class='tab-pane' id='fixed_rsa-" + (i + 1)
 					+ "' >  </div>")
 			tabs.append(tab_pane);
 			// tab_pane.append("<TABLE>");
@@ -732,7 +732,7 @@ function handleError(error, status, request) {
 }
 
 function fillTable(jsonTableData, columnHeadings, tabnumber, abbreviatedKey) {
-	var independentArray = $("#independent-rsa").val();
+	var independentArray = $("#independent_rsa").val();
 	independentArraySplit = independentArray.split(",");
 
 	var arr = [];
@@ -859,7 +859,7 @@ function makeSelectionsUnique(originalOptions, elementId) {
 	var selectedValues = [];
 	var disabledValues = [];
 
-	$("#calculate").button("option", "disabled", true);
+	$("#calculate_rsa").button("option", "disabled", true);
 
 	if (activeSelectionChange_rsa == true)
 		return;

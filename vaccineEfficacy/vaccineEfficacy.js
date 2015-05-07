@@ -1,3 +1,25 @@
+
+// Define the dropdown list - differentiate the text and value.
+var keysforfunctionnames = [ "", "VE", "p1", "p2", "N", "Power"];
+var functionnames_ve = [ "", "VE", "p1", "p2", "N", "Power"];
+var functionnames_text_ve = [ "", "Vaccine Efficacy (VE) vs Unexposed", "Unvaccinated Standard Attack Rate (p1)", "Experimental Attack Rate (p2)", "Total Sample Size (N)", "Power to Reject Null Hypothesis (Power)"];
+
+// result tabs html
+var tabs_html_ve = '\
+<div role="tabpanel">\
+  <ul class="nav nav-tabs" role="tablist">\
+    <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">FixedValue1</a></li>\
+    <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">FixedValue2</a></li>   \
+  </ul>\
+  <div class="tab-content">\
+    <div role="tabpanel" class="tab-pane active" id="tab1">Tab1Content</div>\
+    <div role="tabpanel" class="tab-pane" id="tab2">Tab2Content</div>    \
+  </div>\
+</div>\
+';
+
+/* the following variable definitions are from the original riskStratAdvanced.js */
+/* put required or new variables above this line */
 var oTable;
 var outputTable;
 var giRedraw = false;
@@ -12,10 +34,7 @@ var col;
 var validPrevValue = false;
 var tableFirstColLabel;
 var tableFirstRowLabel;
-var keysforfunctionnames = [ "", "VE", "p1", "p2", "N", "Power"];
-var functionnames_ve = [ "", "VE", "p1", "p2", "N", "Power"];
-var functionnames_text_ve = [ "", "Vaccine Efficacy (VE) vs Unexposed", "Unvaccinated Standard Attack Rate (p1)", "Experimental Attack Rate (p2)", "Total Sample Size (N)", "Power to Reject Null Hypothesis (Power)"];
-var activeSelectionChange_ve = false;
+var activeSelectionChange_ve = false; 
 
 /* Note: invalidCombos must be entered in alphabetical order per variable. */
 var invalidCombos = [ "delta-sensitivity-specificity", "cnpv-delta-ppv",
@@ -256,7 +275,14 @@ $(document).ready(function() {
         console.log(ret);
         var retobj = jQuery.parseJSON(ret);
         $("#status_bar_ve").text(retobj.pdata);
-        $("#result_plot_ve").html('<img src="' + retobj.plot + '">');
+        //$("#result_plot_ve").html('<img src="' + retobj.plot + '">');
+        
+        // The following three lines are for demo only, compose the html dynamically from the jsonstring returned from 
+        // the service.
+        tabs_html_ve = tabs_html_ve.replace('FixedValue1', 'N=4437');
+        tabs_html_ve = tabs_html_ve.replace('Tab1Content', '<img src="' + retobj.plot + '">');        
+        $("#result_plot_ve").html(tabs_html_ve);
+        
         /// Done.
         $('#result_plot_ve').show();
         $('#calculate_ve').prop("disabled", false);

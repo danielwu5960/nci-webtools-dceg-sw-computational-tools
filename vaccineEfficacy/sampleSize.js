@@ -19,7 +19,7 @@ $(function() {
       // Encode data as JSON.
       //async:false,
       data: JSON.stringify({
-        k: $("#independent-ss").val(),
+        k: $("#independent_ss").val(),
         sens: trim_spaces($("#sensitivity_val").text()),
         spec: trim_spaces($("#specificity_val").text()),
         prev: $("#prevalence").val(),
@@ -33,7 +33,7 @@ $(function() {
       success: function(ret) {
         $("#spinner").hide();
         $("#output_graph").empty();
-        generate_tabs($("#fixed-ss").val(), $("#randomnumber").text());
+        generate_tabs($("#fixed_ss").val(), $("#randomnumber").text());
         generate_tables(ret);
         random_gen();
       },
@@ -54,16 +54,16 @@ $(function() {
     $('#ss')[0].reset();
   });
 
-  $("#add-test-data-ss").click(function() {
+  $("#add-test-data_ss").click(function() {
     example_code();
   });
 
-  $("#contour-ss").keyup(function() {
-    change_hidden('contour-ss');
+  $("#contour_ss").keyup(function() {
+    change_hidden('contour_ss');
   });
 
-  $("#fixed-ss").keyup(function() {
-    change_hidden('fixed-ss');
+  $("#fixed_ss").keyup(function() {
+    change_hidden('fixed_ss');
   });
 
 
@@ -139,23 +139,23 @@ function generate_tabs(iterate, randomnumber) {
 };
 
 function change_ff() {
-  $("#fixed_flag").text($("#fixed_dropdown-ss option:selected").text());
+  $("#fixed_flag").text($("#fixed_dropdown_ss option:selected").text());
 }
 
 function lock_fixed_options() {
-  var contour_ss = $("#contour_dropdown-ss option:selected").text();
-  $("#fixed_dropdown-ss").empty();
+  var contour_ss = $("#contour_dropdown_ss option:selected").text();
+  $("#fixed_dropdown_ss").empty();
   if (contour_ss === "Specificity") {
-    $("#fixed_dropdown-ss").append('<option value="specificity" disabled="disabled">Specificity</a>');
-    $("#fixed_dropdown-ss").append('<option value="sensitivity" selected>Sensitivity</a>');
-    $("#specificity_val").text($("#contour-ss").val());
-    $("#sensitivity_val").text($("#fixed-ss").val());
+    $("#fixed_dropdown_ss").append('<option value="specificity" disabled="disabled">Specificity</a>');
+    $("#fixed_dropdown_ss").append('<option value="sensitivity" selected>Sensitivity</a>');
+    $("#specificity_val").text($("#contour_ss").val());
+    $("#sensitivity_val").text($("#fixed_ss").val());
   }
   if (contour_ss === "Sensitivity") {
-    $("#fixed_dropdown-ss").append('<option value="specificity" selected>Specificity</a>');
-    $("#fixed_dropdown-ss").append('<option value="sensitivity" disabled="disabled">Sensitivity</a>');
-    $("#sensitivity_val").text($("#contour-ss").val());
-    $("#specificity_val").text($("#fixed-ss").val());
+    $("#fixed_dropdown_ss").append('<option value="specificity" selected>Specificity</a>');
+    $("#fixed_dropdown_ss").append('<option value="sensitivity" disabled="disabled">Sensitivity</a>');
+    $("#sensitivity_val").text($("#contour_ss").val());
+    $("#specificity_val").text($("#fixed_ss").val());
   }
   change_ff();
 }
@@ -163,14 +163,14 @@ function lock_fixed_options() {
 
 
 function change_hidden(callingbox) {
-  if (((callingbox == "contour-ss")) && ($("#contour_dropdown-ss option:selected").text() == "Specificity")) {
-    $("#specificity_val").text(trim_spaces($("#contour-ss").val()));
-  } else if (((callingbox == "contour-ss")) && ($("#contour_dropdown-ss option:selected").text() == "Sensitivity")) {
-    $("#sensitivity_val").text(trim_spaces($("#contour-ss").val()));
-  } else if (((callingbox == "fixed-ss")) && ($("#fixed_dropdown-ss option:selected").text() == "Sensitivity")) {
-    $("#sensitivity_val").text(trim_spaces($("#fixed-ss").val()));
-  } else if (((callingbox == "fixed-ss")) && ($("#fixed_dropdown-ss option:selected").text() == "Specificity")) {
-    $("#specificity_val").text(trim_spaces($("#fixed-ss").val()));
+  if (((callingbox == "contour_ss")) && ($("#contour_dropdown_ss option:selected").text() == "Specificity")) {
+    $("#specificity_val").text(trim_spaces($("#contour_ss").val()));
+  } else if (((callingbox == "contour_ss")) && ($("#contour_dropdown_ss option:selected").text() == "Sensitivity")) {
+    $("#sensitivity_val").text(trim_spaces($("#contour_ss").val()));
+  } else if (((callingbox == "fixed_ss")) && ($("#fixed_dropdown_ss option:selected").text() == "Sensitivity")) {
+    $("#sensitivity_val").text(trim_spaces($("#fixed_ss").val()));
+  } else if (((callingbox == "fixed_ss")) && ($("#fixed_dropdown_ss option:selected").text() == "Specificity")) {
+    $("#specificity_val").text(trim_spaces($("#fixed_ss").val()));
   } else {
     return 0;
   }
@@ -182,25 +182,25 @@ function trim_spaces(varstring) {
 
 function example_code() {
   $("#message").hide();
-  $("#independent-ss").val("0,1");
-  $("#contour-ss").val("0.8,0.9,0.95,0.995");
-  $("#contour_dropdown-ss").val("sensitivity");
-  $("#fixed-ss").val("0.7,0.8,0.9");
-  $("#fixed_dropdown-ss").val("specificity");
+  $("#independent_ss").val("0,1");
+  $("#contour_ss").val("0.8,0.9,0.95,0.995");
+  $("#contour_dropdown_ss").val("sensitivity");
+  $("#fixed_ss").val("0.7,0.8,0.9");
+  $("#fixed_dropdown_ss").val("specificity");
   $("#prevalence").val("0.001");
   $("#n_value").val("1");
   $("#fixed_flag").text("Specificity");
-  change_hidden("contour-ss");
-  change_hidden("fixed-ss");
+  change_hidden("contour_ss");
+  change_hidden("fixed_ss");
   enable_calculate();
 }
 
 function reset_code() {
-  $("#independent-ss").val("0,1");
-  $("#contour-ss").val("");
-  $("#contour_dropdown-ss").val("");
-  $("#fixed-ss").val("");
-  $("#fixed_dropdown-ss").val("");
+  $("#independent_ss").val("0,1");
+  $("#contour_ss").val("");
+  $("#contour_dropdown_ss").val("");
+  $("#fixed_ss").val("");
+  $("#fixed_dropdown_ss").val("");
   $("#prevalence").val("");
   $("#n_value").val("");
   $("#fixed_flag").text("");
@@ -209,8 +209,8 @@ function reset_code() {
   $("#message-content").empty();
   $("#message").hide();
   disable_calculate();
-  //        change_hidden("contour-ss");
-  //        change_hidden("fixed-ss");
+  //        change_hidden("contour_ss");
+  //        change_hidden("fixed_ss");
 }
 
 
